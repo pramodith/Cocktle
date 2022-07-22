@@ -29,7 +29,7 @@ def get_all_cocktails(url):
 
 def get_all_ingredients_cocktails(url):
     ingredients = []
-    cocktails = pd.read_csv("../../data/cocktail_drinks.csv")
+    cocktails = pd.read_csv("../data/cocktail_drinks.csv")
 
     try:
         for cocktail in cocktails["Cocktails"]:
@@ -42,7 +42,7 @@ def get_all_ingredients_cocktails(url):
             if json_body and json_body["drinks"]:
                 for drink in json_body["drinks"]:
                     img_response = requests.get(drink["strDrinkThumb"], stream=True)
-                    with open(f"../../data/images/{cocktail}.png", 'wb') as out_file:
+                    with open(f"../data/images/{cocktail}.png", 'wb') as out_file:
                         shutil.copyfileobj(img_response.raw, out_file)
                     del img_response
                     if drink["strDrink"] == cocktail:
@@ -59,7 +59,7 @@ def get_all_ingredients_cocktails(url):
     ingredients = ["|".join(i) for i in ingredients]
     print(len(ingredients),len(cocktails["Cocktails"].values))
     df = pd.DataFrame(data=list(zip(cocktails["Cocktails"].tolist(),ingredients)),columns=["Cocktails","Ingredients"])
-    df.to_csv("cocktail_ingredients.csv",index=False)
+    df.to_csv("../data/cocktail_ingredients.csv",index=False)
     return True
 
 if __name__ == "__main__":
