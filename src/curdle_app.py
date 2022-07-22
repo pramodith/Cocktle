@@ -6,11 +6,13 @@ from utils import *
 st.title("Curdle : So you think you know your drinks? :beer: ")
 final_message = st.empty()
 st.subheader("Ingredients")
-qna_col, history_col = st.columns([0.75,0.25])
+qna_col, history_col, img_col = st.columns([0.4,0.2,0.4],gap="medium")
 
 with qna_col:
     clue_text = st.empty()
     ingredients_table = st.empty()
+
+with img_col:
     final_image = st.empty()
 
 def get_animated_image(image):
