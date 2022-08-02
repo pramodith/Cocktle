@@ -62,6 +62,7 @@ def refresh_screen():
     st.session_state['cocktail'] = cocktail
     for i in range(len(clues)):
         st.session_state[i] = ""
+    clue_text.write(f"Clue {st.session_state['curr_index'] + 1} : {clues[st.session_state['curr_index']]}")
 
 def get_animated_image(image):
     for i in range(1, 30):
