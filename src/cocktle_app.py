@@ -8,7 +8,7 @@ import streamlit.components.v1 as components
 from cookie_manager import *
 
 cookie_manager = get_manager()
-st.title("Cocktle : Hold your liquor, name your drinks :beer: ")
+st.title("Cocktle : Can you hold your liquor long enough to name your drinks? :beer:")
 question_status_message = st.empty()
 question_progress_bar = st.empty()
 final_message = st.empty()
@@ -62,7 +62,7 @@ def refresh_screen():
     st.session_state['cocktail'] = cocktail
     for i in range(len(clues)):
         st.session_state[i] = ""
-    clue_text.write(f"Clue {st.session_state['curr_index'] + 1} : {clues[st.session_state['curr_index']]}")
+    clue_text.text(f"Clue {st.session_state['curr_index'] + 1} : {clues[st.session_state['curr_index']]}")
 
 def get_animated_image(image):
     for i in range(1, 30):
@@ -101,11 +101,6 @@ if 'curr_index' not in st.session_state:
         curr_question_num = st.session_state['curr_question']
         row = st.session_state['rows']
 
-    for i in range(len(clues)):
-        st.session_state[i] = ""
-    clue_text.write(f"Clue {st.session_state['curr_index'] + 1} : {clues[st.session_state['curr_index']]}")
-
-
 else:
     clues = st.session_state['clues']
     cocktail = st.session_state['cocktail']
@@ -114,6 +109,11 @@ else:
     #cookie_manager.set("test","test")
     #for key in COOKIE_KEYS:
     #    update_cookie_state(key, st.session_state[key])
+
+for i in range(len(clues)):
+    st.session_state[i] = ""
+clue_text.text(f"Clue {st.session_state['curr_index'] + 1} : {clues[st.session_state['curr_index']]}")
+
 
 with history_col:
     guess_table = st.empty()
@@ -136,7 +136,7 @@ if curr_index<len(clues) and st.session_state[curr_index].lower() == cocktail.lo
 
 
 elif st.session_state[curr_index] in st.session_state['guess_history']:
-    clue_text.write(f"Bro are you drunk? You can't guess the same drink twice! \n "
+    clue_text.text(f"Bro are you drunk? You can't guess the same drink twice! \n "
                     f"Clue {curr_index + 1} : {clues[curr_index]}")
     guess_table.table(df_index_from_1(pd.DataFrame(st.session_state['guess_history'], columns=["Guesses"])))
 
@@ -163,12 +163,11 @@ else:
         else:
             if curr_index < len(clues):
                 if levenshtein_distance(cocktail.lower(),st.session_state[curr_index-1].lower())<3:
-                    clue_text.write(f"You are very close to the right answer!!! \n"
+                    clue_text.text(f"You are very close to the right answer!!! \n"
                                     f"Clue {curr_index + 1} : {clues[curr_index]}")
                 else:
-                    clue_text.write(f"Clue {curr_index + 1} : {clues[curr_index]}")
+                    clue_text.text(f"Clue {curr_index + 1} : {clues[curr_index]}")
 
-with history_col:
-    if curr_index < len(clues) and st.session_state[curr_index].lower() != cocktail.lower():
-        response.text_input(label=f"Guess {curr_index+1}/{len(clues)}", key=curr_index, value="")
+if curr_index < len(clues) and st.session_state[curr_index].lower() != cocktail.lower():
+    response.text_input(label=f"Guess {curr_index+1}/{len(clues)}", key=curr_index, value="")
 
