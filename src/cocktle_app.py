@@ -8,7 +8,7 @@ import streamlit.components.v1 as components
 from cookie_manager import *
 
 cookie_manager = get_manager()
-st.title("Cocktle : So you think you know your drinks? :beer: ")
+st.title("Cocktle : Hold your liquor, name your drinks :beer: ")
 question_status_message = st.empty()
 question_progress_bar = st.empty()
 final_message = st.empty()
@@ -76,7 +76,7 @@ def df_index_from_1(df : pd.DataFrame):
 
 
 if 'curr_index' not in st.session_state:
-    if True:
+    if 'curr_index' not in cookie_manager.get_all():
         st.session_state['curr_index'] = curr_index = 0
         st.session_state['correct_answers'] = 0
         st.session_state['curr_question'] = curr_question_num = 0
@@ -90,18 +90,20 @@ if 'curr_index' not in st.session_state:
         cocktail = row.loc[curr_question_num, "Cocktails"]
         st.session_state['clues'] = clues
         st.session_state['cocktail'] = cocktail
-        for i in range(len(clues)):
-            st.session_state[i] = ""
-        clue_text.write(f"Clue {st.session_state['curr_index']+1} : {clues[st.session_state['curr_index']]}")
-        print(cocktail)
+        print(f"Drink is {cocktail}")
     else:
         for key in COOKIE_KEYS:
             st.session_state[key] = get_cookie(cookie_manager,key)
-            clues = st.session_state['clues']
-            cocktail = st.session_state['cocktail']
-            curr_index = st.session_state['curr_index']
-            curr_question_num = st.session_state['curr_question']
-            row = st.session_state['rows']
+        clues = st.session_state['clues']
+        cocktail = st.session_state['cocktail']
+        curr_index = st.session_state['curr_index']
+        curr_question_num = st.session_state['curr_question']
+        row = st.session_state['rows']
+
+    for i in range(len(clues)):
+        st.session_state[i] = ""
+    clue_text.write(f"Clue {st.session_state['curr_index'] + 1} : {clues[st.session_state['curr_index']]}")
+
 
 else:
     clues = st.session_state['clues']
@@ -111,7 +113,6 @@ else:
     #cookie_manager.set("test","test")
     #for key in COOKIE_KEYS:
     #    update_cookie_state(key, st.session_state[key])
-    print(st.session_state.to_dict())
 
 with history_col:
     guess_table = st.empty()
