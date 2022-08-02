@@ -76,7 +76,7 @@ def df_index_from_1(df : pd.DataFrame):
 
 
 if 'curr_index' not in st.session_state:
-    if get_cookie(cookie_manager,'curr_index') is None:
+    if True:
         st.session_state['curr_index'] = curr_index = 0
         st.session_state['correct_answers'] = 0
         st.session_state['curr_question'] = curr_question_num = 0
