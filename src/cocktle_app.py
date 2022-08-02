@@ -14,7 +14,7 @@ question_progress_bar = st.empty()
 final_message = st.empty()
 clue_text = st.empty()
 response = st.empty()
-qna_col, history_col, img_col = st.columns([0.4, 0.2, 0.4], gap="medium")
+qna_col, history_col, img_col = st.columns([0.334, 0.333, 0.333], gap="medium")
 curr_date = str(datetime.datetime.now().strftime("%d-%m-%Y")).replace("-", "")
 curr_date = int(curr_date)
 
