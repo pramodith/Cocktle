@@ -1,2 +1,4 @@
 streamlit
 extra_streamlit_components
+streamlit-javascript
+streamlit-bridge

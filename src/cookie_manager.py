@@ -4,8 +4,8 @@ import streamlit as st
 
 
 @st.cache(allow_output_mutation=True)
-def get_manager():
-    return stx.CookieManager()
+def get_manager(key):
+    return stx.CookieManager(key=key)
 
 
 def create_cookie(cookie_manager, key, value, datetime):
